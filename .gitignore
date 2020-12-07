@@ -3,3 +3,5 @@
 /Dist
 /Logs
 /Library
+/*.csproj
+/*.sln
