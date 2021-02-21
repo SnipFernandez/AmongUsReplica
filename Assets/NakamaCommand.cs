@@ -12,4 +12,5 @@ public class NakamaCommand
     public float v;
     public float speed;
     public string skin;
+    public bool isALive;
 }

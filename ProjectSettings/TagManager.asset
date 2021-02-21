@@ -4,8 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Character
+  - CAMR
+  - CAZU
+  - CROJ
+  - CROS
   - Impostor
+  - Character
+  - CharacterPlayer
   layers:
   - Default
   - TransparentFX
@@ -15,10 +20,10 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - Nave
-  - Character
-  - Character2
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

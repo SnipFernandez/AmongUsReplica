@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,12 +13,15 @@ public class UILevel01Controller : MonoBehaviour
     public Image Killcontador;
     bool hacerContador = false;
     public Button btReport;
+    public MiniJuegoCablesController miniJuegoCables;
+    public MinijuegoGasolinaController miniJuegoGasolina;
+    [SerializeField, SerializeReference]
+    public Menu windowsOpen;
 
     public GameObject reporte;
     public Text reporteText;
+    public GameObject player;
     
-    public GameObject pantallaReporte;
-
     private void Awake()
     {
         task.fillAmount = 0;
@@ -28,8 +32,20 @@ public class UILevel01Controller : MonoBehaviour
         btKill.interactable = false;
         reporteText.text = "";
         reporte.SetActive(false);
-        pantallaReporte.SetActive(false);
     }     
+
+    public void comprobarTareas()
+    {
+        if(miniJuegoCables?.cablesConectados.Count == 4)
+        {
+            aumentarTareas(.5f);
+        }
+
+        if(miniJuegoGasolina.liquido.fillAmount >= .88f)
+        {
+            aumentarTareas(.5f);
+        }
+    }
 
     public void aumentarTareas(float cantidad)
     {
@@ -42,18 +58,40 @@ public class UILevel01Controller : MonoBehaviour
         btReport.interactable = estado;
     }
 
+    public void cambiarEstadoBTReportar2()
+    {
+        windowsOpen.show();
+        player.SendMessage("moveToResPawn");
+    }
+
+    PlayerController target;
     public void cambiarEstadoBTMatar(bool estado)
     {
-        btKill.interactable = estado;
-        if (!estado)
+        Debug.Log("cambiarEstadoBTMatar");
+        if (target != null)
         {
-            Killcontador.gameObject.SetActive(true);
-            hacerContador = true;
+            Debug.Log("aaaaaaaaaaaaa");
+            target.isALive = false;
+            btKill.interactable = estado;
+            if (!estado)
+            {
+                Killcontador.gameObject.SetActive(true);
+                hacerContador = true;
+            }
         }
     }
 
-    float time;
-    float contador = 0;
+    public void cambiarEstadoBTMatar2(bool estado, PlayerController outTarget)
+    {
+        if (!hacerContador)
+        {
+            btKill.interactable = estado;
+        }
+        target = outTarget;
+    }
+
+    public float time;
+    public float contador = 0;
     private void Update()
     {
         if (hacerContador)
@@ -62,16 +100,25 @@ public class UILevel01Controller : MonoBehaviour
             if(time >= 1)
             {
                 time = 0;
-                contador += 1 / 15;
-                Killcontador.fillAmount += 1/15;
+                contador += 1f/15f;
+                Killcontador.fillAmount += 1f/15f;
             }
 
             if(contador >= 1)
             {
                 hacerContador = false;
+                time = 0;
+                contador = 0;
                 Killcontador.gameObject.SetActive(false);
                 Killcontador.fillAmount = 0;
                 cambiarEstadoBTMatar(true);
+                if (target != null)
+                {
+                    btKill.interactable = true;
+                }
+                else {
+                    btKill.interactable = false;
+                }
             }
         }
     }
@@ -79,10 +126,15 @@ public class UILevel01Controller : MonoBehaviour
     public void mostrarNotificacion(string texto) {
         reporteText.text = texto;
         reporte.SetActive(true);
-    }
+    }    
 
-    public void mostrarPantallaVotaciones()
+    internal void mostrarPantalla(Menu openWindow)
     {
-        pantallaReporte.SetActive(true);
+        openWindow?.show();
+        if (openWindow is UIScreenVoteController)
+        {
+            Debug.Log("bbbbbbbb");
+            player.SendMessage("moveToResPawn");
+        }
     }
 }

@@ -250,6 +250,7 @@ GameObject:
   - component: {fileID: 2366619640550156368}
   - component: {fileID: 2366619640550156370}
   - component: {fileID: 2366619640550156369}
+  - component: {fileID: 1562485489716699505}
   m_Layer: 5
   m_Name: MarcadorTripulante
   m_TagString: Untagged
@@ -315,6 +316,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1562485489716699505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2366619640550156383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f940b45aa3048c468a25e6db9103fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tName: {fileID: 4852897285258610753}
+  buttonVote: {fileID: 2366619640555520891}
+  icon: {fileID: 5201009989088426927}
+  voting:
+  - {fileID: 548746642769771182}
+  - {fileID: 2207550938853255546}
+  - {fileID: 5396525113933619062}
+  - {fileID: 1814028464314307257}
+  - {fileID: 1359400253582271129}
+  - {fileID: 1675521655994866392}
 --- !u!1 &2366619640555520889
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +454,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2366619640555520892}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1562485489716699505}
+        m_MethodName: doVote
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2366619641014734803
 GameObject:
   m_ObjectHideFlags: 0

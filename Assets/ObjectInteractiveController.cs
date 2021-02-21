@@ -6,6 +6,9 @@ public class ObjectInteractiveController : MonoBehaviour
 {
 
     Outline outline;
+    [SerializeField, SerializeReference]
+    public Menu windowsOpen;
+    public bool isHatch;
     public GameObject ui;
     public List<string> targets = new List<string>();
 
@@ -21,6 +24,7 @@ public class ObjectInteractiveController : MonoBehaviour
         if (targets.Contains(other.tag))
         {
             outline.OutlineMode = Outline.Mode.OutlineVisible;
+            other.SendMessage("NearAnInteractiveObject",new NearObject(true, windowsOpen, isHatch, gameObject));
             ui.SetActive(true);
         }
     }
@@ -30,6 +34,7 @@ public class ObjectInteractiveController : MonoBehaviour
         if (targets.Contains(other.tag))
         {
             outline.OutlineMode = Outline.Mode.None;
+            other.SendMessage("NearAnInteractiveObject", new NearObject(false, windowsOpen));
             ui.SetActive(false);
         }
     }

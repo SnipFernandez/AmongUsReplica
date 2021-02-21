@@ -11,6 +11,10 @@ public class UILobbyController : MonoBehaviour
 
     public void incrementPlayer()
     {
+        // Esto quitar
+        numPlayers = 6;
+
+
         numPlayers++;
         tNumPlayer.text = $"{numPlayers}/6";
 

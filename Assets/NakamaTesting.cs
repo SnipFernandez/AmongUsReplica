@@ -60,6 +60,36 @@ public class NakamaTesting : MonoBehaviour
         return false;
     }
 
+    public async void updateState(bool v,string sessionID)
+    {
+        if (_socket == null)
+        {
+            await createSocket();
+        }
+
+        if (_socket.IsConnected)
+        {
+
+            NakamaCommand nakamaCommand = new NakamaCommand();
+
+            nakamaCommand.command = "update_state";
+            nakamaCommand.isALive = v;
+            nakamaCommand.sessionId = sessionID;
+
+             var ns = System.Text.Encoding.UTF8.GetBytes(JsonUtility.ToJson(nakamaCommand));
+
+            //Debug.Log(JsonUtility.ToJson(nakamaCommand));
+            //Debug.Log(ns);
+
+            await _socket.SendMatchStateAsync(_match.Id, 1, ns);
+        }
+        else
+        {
+            await _socket.ConnectAsync(_session);
+            updateState(v,sessionID);
+        }
+    }
+
     public string getMatchID()
     {
         return _match.Id;
@@ -228,7 +258,7 @@ public class NakamaTesting : MonoBehaviour
             case "start_game":
                 _queue.Enqueue(new SendMessageObject()
                 {
-                    messajeName = "startGame",
+                    messajeName = "StartMatchWithoutNakama",
                     messageParam = "Local"
                 });
                 //ui.SendMessage("startGame", obj.UserPresence.SessionId);
@@ -241,6 +271,15 @@ public class NakamaTesting : MonoBehaviour
                     messageParam = state
                 });
                 //ui.SendMessage("updateCharacterPosition", state);
+                break;
+            case "update_state":
+                // un personauje a caido
+                // state.sessionId = obj.UserPresence.SessionId;
+                _queue.Enqueue(new SendMessageObject()
+                {
+                    messajeName = "updateCharacterState",
+                    messageParam = state
+                });
                 break;
         }
     }
@@ -283,5 +322,9 @@ public class NakamaTesting : MonoBehaviour
             SendMessageObject messageObject = _queue.Dequeue();
             gamecontroller.SendMessage(messageObject.messajeName, messageObject.messageParam);
         }
+    }
+
+    public string GetSessionId(){
+        return _session.UserId;
     }
 }

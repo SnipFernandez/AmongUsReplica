@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 6921221593216623368}
   - component: {fileID: 6921221593216623371}
   - component: {fileID: 6921221593216623382}
+  - component: {fileID: 6152838003626424780}
   m_Layer: 5
   m_Name: TextPlayer
   m_TagString: Untagged
@@ -193,6 +194,22 @@ MonoBehaviour:
   modifyX: 1
   modifyY: 1
   modifyZ: 1
+--- !u!114 &6152838003626424780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6921221593216623373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a35f56badfd1c8498f477daa74b1a94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  texto: {fileID: 6921221591718092214}
+  image: {fileID: 6921221593365608012}
+  outline: {fileID: 6921221593365608010}
 --- !u!1 &6921221593365608014
 GameObject:
   m_ObjectHideFlags: 0
